@@ -1,0 +1,5 @@
+key.freecam.category=FreeCam
+key.anchor.description=Activer mode FreeCam
+key.roll_l.description=Roulis a Gauche
+key.roll_r.description=Roulis a Droite
+key.roll_reset.description=Réinitialiser le Roulis

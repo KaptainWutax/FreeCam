@@ -24,10 +24,11 @@ public class EventViewRender {
 	private static float originalRotationPitch = 0;
 	private static float originalHeadRotationYaw = 0;
 	private static int originalHeldSlot = 0;
-	private static float originalFOV = 70;
+	private static float originalFOV = 0;
 	
 	private static boolean isAnchored = false;
 	private static boolean firstPress = true;
+	private static boolean lastPress = false;
 	
 	@SubscribeEvent
 	public static void onCameraSetup(EntityViewRenderEvent.CameraSetup event) {
@@ -56,7 +57,8 @@ public class EventViewRender {
 			isAnchored = !isAnchored;
 		}
 	
-		if(isAnchored) {				
+		if(isAnchored) {	
+			lastPress = true;
 			if(firstPress) {
 				//Stores the original rotations before engaging "freecam" mode
 				originalRotationYaw = player.rotationYaw;
@@ -129,11 +131,14 @@ public class EventViewRender {
 			//"freecam" mode has already engaged
 			firstPress = false;			
 		} else {
-			//Resets everything for the next use
-			firstPress = true;
-			prevYaw = 0;
-			prevPitch = 0;	
-			gameSettings.fovSetting = originalFOV;
+			if(lastPress) {
+				//Resets everything for the next use
+				firstPress = true;
+				prevYaw = 0;
+				prevPitch = 0;	
+				gameSettings.fovSetting = originalFOV;
+				lastPress = false;
+			}
 		}
 		
 	}
